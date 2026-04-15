@@ -106,11 +106,11 @@ var nColumnes = 4;
 
 ## 👥 Autors
 
-| Nom | Participació |
-|---|---|
-| — | — |
-| — | — |
-| — | — |
+| Nom |
+|---|
+| Ferran |
+| Xavi |
+| Zenon |
 
 ---
 
