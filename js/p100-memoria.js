@@ -3,7 +3,7 @@ var separacioH=20, separacioV=20;
 var nFiles=1, nColumnes=1;
 
 var jocCartes = [
-    'carta14', 
+    'carta2'
 ];
 
 
@@ -18,8 +18,8 @@ $(function(){
     alcadaCarta=$(".carta").height();
     // mida del tauler
     $("#tauler").css({
-        "width" : "120px",
-        "height": "160px"
+        "width" : "150px",
+        "height": "150px"
     });
 
     carta=$("#f"+f+"c"+c);
