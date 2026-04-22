@@ -1,6 +1,9 @@
 var ampladaCarta, alcadaCarta;
 var separacioH=20, separacioV=20;
 var nFiles=0, nColumnes=0;
+var constant = 132;
+
+var musicaFons = new Audio('so/musicaFons.mp3');
 
 
 var jocCartes = [
@@ -40,8 +43,9 @@ function valorTauler(){
         nFiles = valorFila;
         nColumnes = valorColumna;
         
+        Reproduir()
         crearTauler();
-}
+    }
 }
 
 
@@ -58,8 +62,8 @@ function crearTauler(){
 
     jocCartes = barrejar(jocCartes);
  
-    var width = 132*nColumnes + separacioH;
-    var height = 132*nFiles + separacioV;
+    var width = constant*nColumnes + separacioH;
+    var height = constant*nFiles + separacioV;
     for (let f = 1; f <= nFiles; f++) {
     for (let c = 1; c <= nColumnes; c++) {
         var id = "f"+f+"c"+c;
@@ -107,3 +111,18 @@ function barrejar(cartes) {
     }
     return cartes;
 }
+
+
+function Reproduir(){
+    musicaFons.loop = true; // Que la música es repeteixi
+    musicaFons.play();
+    var musicaIniciada = true;
+}
+
+
+function pararMusicaFons() {
+    musicaFons.pause();
+    musicaFons.currentTime = 0;
+}
+
+
