@@ -24,12 +24,15 @@ function valorTauler(){
     if(valorTotal % 2 !== 0){
     alert("La multiplicació dels 2 valors ha de donar parell!");}
     else{
-    nFiles = valorFila;
-    nColumnes = valorColumna;}
+        nFiles = valorFila;
+        nColumnes = valorColumna;
+        
+        crearTauler();
+}
 }
 
 
-$(function(){
+function crearTauler(){
 
     var tauler = $("#tauler");
     tauler.empty();
@@ -42,8 +45,6 @@ $(function(){
 
     jocCartes = barrejar(jocCartes);
  
-    
-    valorTauler();
     var width = 132*nColumnes + separacioH;
     var height = 132*nFiles + separacioV;
     for (let f = 1; f <= nFiles; f++) {
@@ -81,7 +82,7 @@ $(function(){
         $(this).toggleClass("carta-girada");
     });
 
-});
+};
 
 
 function barrejar(cartes) {
