@@ -1,6 +1,6 @@
 var ampladaCarta, alcadaCarta;
 var separacioH=20, separacioV=20;
-var nFiles=5, nColumnes=5;
+var nFiles=0, nColumnes=0;
 
 
 var jocCartes = [
@@ -10,31 +10,42 @@ var jocCartes = [
   'carta16','carta17','carta18','carta19','carta20','carta21','carta22',
   'carta23',
 
-
   'carta1','carta2','carta3','carta4','carta5','carta6','carta7','carta8',
   'carta9','carta10','carta11','carta12','carta13','carta14','carta15',
   'carta16','carta17','carta18','carta19','carta20','carta21','carta22',
   'carta23'
-
-
-
 ]
 ;
 
+function valorTauler(){
+    const valorFila = document.getElementById("fila").value;
+    const valorColumna = document.getElementById("columna").value;
+    var valorTotal = valorColumna * valorFila;
+    if(valorTotal % 2 !== 0){
+    alert("La multiplicació dels 2 valors ha de donar parell!");}
+    else{
+    nFiles = valorFila;
+    nColumnes = valorColumna;}
+}
+
 
 $(function(){
+
+    var tauler = $("#tauler");
+    tauler.empty();
+    
     var f, c, carta;
     f=1;
     c=1;
 
-    var width = 132*nColumnes + separacioH;
-    var height = 132*nFiles + separacioV;
+    
 
     jocCartes = barrejar(jocCartes);
  
-    var tauler = $("#tauler");
-    tauler.empty();
-
+    
+    valorTauler();
+    var width = 132*nColumnes + separacioH;
+    var height = 132*nFiles + separacioV;
     for (let f = 1; f <= nFiles; f++) {
     for (let c = 1; c <= nColumnes; c++) {
         var id = "f"+f+"c"+c;
@@ -43,8 +54,6 @@ $(function(){
     }
 
     var index = 0;
-
-
 
     ampladaCarta=$(".carta").width(); 
     alcadaCarta=$(".carta").height();
@@ -75,14 +84,12 @@ $(function(){
 });
 
 
-
-
-function barrejar(array) {
-    for (var i = array.length - 1; i > 0; i--) {
+function barrejar(cartes) {
+    for (var i = cartes.length - 1; i > 0; i--) {
         var j = Math.floor(Math.random() * (i + 1));
-        var temp = array[i];
-        array[i] = array[j];
-        array[j] = temp;
+        var temp = cartes[i];
+        cartes[i] = cartes[j];
+        cartes[j] = temp;
     }
-    return array;
+    return cartes;
 }
