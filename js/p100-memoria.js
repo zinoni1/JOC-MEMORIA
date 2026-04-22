@@ -8,11 +8,6 @@ var jocCartes = [
   'carta1','carta2','carta3','carta4','carta5','carta6','carta7','carta8',
   'carta9','carta10','carta11','carta12','carta13','carta14','carta15',
   'carta16','carta17','carta18','carta19','carta20','carta21','carta22',
-  'carta23',
-
-  'carta1','carta2','carta3','carta4','carta5','carta6','carta7','carta8',
-  'carta9','carta10','carta11','carta12','carta13','carta14','carta15',
-  'carta16','carta17','carta18','carta19','carta20','carta21','carta22',
   'carta23'
 ]
 ;
@@ -41,9 +36,15 @@ function crearTauler(){
     f=1;
     c=1;
 
-    
 
-    jocCartes = barrejar(jocCartes);
+    var totalCartes = nFiles * nColumnes;
+    var numParelles = totalCartes / 2;
+
+    var cartesBase = jocCartes.slice(0, numParelles);
+
+    var cartesNecessaries = cartesBase.concat(cartesBase);
+
+    cartesNecessaries = barrejar(cartesNecessaries);
  
     var width = 132*nColumnes + separacioH;
     var height = 132*nFiles + separacioV;
@@ -68,7 +69,7 @@ function crearTauler(){
    for (let f = 1; f <= nFiles; f++) {
     for (let c = 1; c <= nColumnes; c++) {
         carta = $("#f" + f + "c" + c);
-        carta.find(".davant").addClass(jocCartes[index]);
+        carta.find(".davant").addClass(cartesNecessaries[index]);
             carta.css({
                 "left": ((c-1) * (ampladaCarta + separacioH) + separacioH) + "px",
                 "top":  ((f-1) * (alcadaCarta  + separacioV) + separacioV) + "px"
