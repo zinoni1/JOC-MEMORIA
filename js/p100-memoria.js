@@ -1,6 +1,9 @@
 var ampladaCarta, alcadaCarta;
 var separacioH=20, separacioV=20;
 var nFiles=0, nColumnes=0;
+var constant = 132;
+
+var musicaFons = new Audio('so/musicaFons.mp3');
 
 
 var jocCartes = [
@@ -10,26 +13,43 @@ var jocCartes = [
   'carta16','carta17','carta18','carta19','carta20','carta21','carta22',
   'carta23',
 
-  'carta1','carta2','carta3','carta4','carta5','carta6','carta7','carta8',
-  'carta9','carta10','carta11','carta12','carta13','carta14','carta15',
-  'carta16','carta17','carta18','carta19','carta20','carta21','carta22',
-  'carta23'
 ]
 ;
 
 function valorTauler(){
     const valorFila = document.getElementById("fila").value;
+
+    if(valorFila < 0){
+        alert("Els valors no poden ser negatius")
+    }
     const valorColumna = document.getElementById("columna").value;
+
+
+    if(valorColumna <0){
+        alert("Els valors no poden ser negatius")
+    }
+
     var valorTotal = valorColumna * valorFila;
+
     if(valorTotal % 2 !== 0){
-    alert("La multiplicació dels 2 valors ha de donar parell!");}
+    alert("La multiplicació dels 2 valors ha de donar parell!");
+    }
+    
+    else if(valorTotal > 46){
+        alert("Els valors han de ser menors")
+    }
+
     else{
-    nFiles = valorFila;
-    nColumnes = valorColumna;}
+        nFiles = valorFila;
+        nColumnes = valorColumna;
+        
+        Reproduir()
+        crearTauler();
+    }
 }
 
 
-$(function(){
+function crearTauler(){
 
     var tauler = $("#tauler");
     tauler.empty();
@@ -42,10 +62,8 @@ $(function(){
 
     jocCartes = barrejar(jocCartes);
  
-    
-    valorTauler();
-    var width = 132*nColumnes + separacioH;
-    var height = 132*nFiles + separacioV;
+    var width = constant*nColumnes + separacioH;
+    var height = constant*nFiles + separacioV;
     for (let f = 1; f <= nFiles; f++) {
     for (let c = 1; c <= nColumnes; c++) {
         var id = "f"+f+"c"+c;
@@ -81,7 +99,7 @@ $(function(){
         $(this).toggleClass("carta-girada");
     });
 
-});
+};
 
 
 function barrejar(cartes) {
@@ -93,3 +111,18 @@ function barrejar(cartes) {
     }
     return cartes;
 }
+
+
+function Reproduir(){
+    musicaFons.loop = true; // Que la música es repeteixi
+    musicaFons.play();
+    var musicaIniciada = true;
+}
+
+
+function pararMusicaFons() {
+    musicaFons.pause();
+    musicaFons.currentTime = 0;
+}
+
+
