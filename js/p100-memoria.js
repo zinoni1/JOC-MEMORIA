@@ -5,7 +5,8 @@ var constant = 132;
 
 var musicaFons = new Audio('so/musicaFons.mp3');
 
-
+    //array buit per posar les cartes girades (max 2)
+    var cartesGirades = [];
 var jocCartes = [
 
   'carta1','carta2','carta3','carta4','carta5','carta6','carta7','carta8',
@@ -14,6 +15,8 @@ var jocCartes = [
   'carta23',
 
 ]
+//copia per poder barrejar sense tocar la original
+var jocCartesCopia = [];
 ;
 
 function valorTauler(){
@@ -60,7 +63,7 @@ function crearTauler(){
 
     
 
-    jocCartes = barrejar(jocCartes);
+    jocCartesCopia = barrejar(jocCartes);
  
     var width = constant*nColumnes + separacioH;
     var height = constant*nFiles + separacioV;
@@ -85,7 +88,7 @@ function crearTauler(){
    for (let f = 1; f <= nFiles; f++) {
     for (let c = 1; c <= nColumnes; c++) {
         carta = $("#f" + f + "c" + c);
-        carta.find(".davant").addClass(jocCartes[index]);
+        carta.find(".davant").addClass(jocCartesCopia[index]);
             carta.css({
                 "left": ((c-1) * (ampladaCarta + separacioH) + separacioH) + "px",
                 "top":  ((f-1) * (alcadaCarta  + separacioV) + separacioV) + "px"
@@ -94,22 +97,60 @@ function crearTauler(){
 
       }
     }
-   
+
     $(".carta").on("click",function(){
+        //girar maxim 2 cartes al mateix temps
+        if (cartesGirades.length == 2){
+            return;
+        };
+        //no girar la mateixa carta
+        if ($(this).hasClass("carta-girada")){
+        return;
+        };
         $(this).toggleClass("carta-girada");
+        cartesGirades.push($(this));
+
+        if (cartesGirades.length == 2){
+             comprobarCartes();
+        }
+        
     });
 
 };
 
+function comprobarCartes(){
+    var carta1 = cartesGirades[0];
+    var carta2 = cartesGirades[1];
+     carta1.fadeOut(500, function(){ $(this).remove(); });
+        carta2.fadeOut(500, function(){ $(this).remove(); });
+        cartesGirades = [];
+}
+
 
 function barrejar(cartes) {
+    let numCartes = nColumnes * nFiles; //numero total de cartes
+
+    //barrejar
     for (var i = cartes.length - 1; i > 0; i--) {
         var j = Math.floor(Math.random() * (i + 1));
         var temp = cartes[i];
         cartes[i] = cartes[j];
         cartes[j] = temp;
     }
-    return cartes;
+
+    //dividir perque tinguin una parella
+    let cartesUniques = cartes.slice(0, numCartes / 2);
+
+    //tornar a barrejar
+    let cartesDobles = cartesUniques.concat(cartesUniques);
+    for (var i = cartesDobles.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = cartesDobles[i];
+        cartesDobles[i] = cartesDobles[j];
+        cartesDobles[j] = temp;
+    }
+
+    return cartesDobles;
 }
 
 
