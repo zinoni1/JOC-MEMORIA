@@ -1,134 +1,176 @@
 var ampladaCarta, alcadaCarta;
-var separacioH=20, separacioV=20;
-var nFiles=0, nColumnes=0;
+var separacioH = 20, separacioV = 20;
+var nFiles = 0, nColumnes = 0;
 var constant = 132;
-
+var numCartes = 0;
+var clicks = 0;
 var musicaFons = new Audio('so/musicaFons.mp3');
 
-    //array buit per posar les cartes girades (max 2)
-    var cartesGirades = [];
+//array buit per posar les cartes girades (max 2)
+var cartesGirades = [];
 var jocCartes = [
 
-  'carta1','carta2','carta3','carta4','carta5','carta6','carta7','carta8',
-  'carta9','carta10','carta11','carta12','carta13','carta14','carta15',
-  'carta16','carta17','carta18','carta19','carta20','carta21','carta22',
-  'carta23',
+    'carta1', 'carta2', 'carta3', 'carta4', 'carta5', 'carta6', 'carta7', 'carta8',
+    'carta9', 'carta10', 'carta11', 'carta12', 'carta13', 'carta14', 'carta15',
+    'carta16', 'carta17', 'carta18', 'carta19', 'carta20', 'carta21', 'carta22',
+    'carta23',
 
 ]
 //copia per poder barrejar sense tocar la original
 var jocCartesCopia = [];
 ;
 
-function valorTauler(){
+function valorTauler() {
     const valorFila = document.getElementById("fila").value;
 
-    if(valorFila < 0){
+    if (valorFila < 0) {
         alert("Els valors no poden ser negatius")
     }
     const valorColumna = document.getElementById("columna").value;
 
 
-    if(valorColumna <0){
+    if (valorColumna < 0) {
         alert("Els valors no poden ser negatius")
     }
 
     var valorTotal = valorColumna * valorFila;
 
-    if(valorTotal % 2 !== 0){
-    alert("La multiplicació dels 2 valors ha de donar parell!");
+    if (valorTotal % 2 !== 0) {
+        alert("La multiplicació dels 2 valors ha de donar parell!");
     }
-    
-    else if(valorTotal > 46){
+
+    else if (valorTotal > 46) {
         alert("Els valors han de ser menors")
     }
 
-    else{
+    else {
         nFiles = valorFila;
         nColumnes = valorColumna;
-        
+
         Reproduir()
         crearTauler();
     }
 }
 
 
-function crearTauler(){
+function crearTauler() {
 
     var tauler = $("#tauler");
     tauler.empty();
-    
-    var f, c, carta;
-    f=1;
-    c=1;
 
-    
+    var f, c, carta;
+    f = 1;
+    c = 1;
+
+
 
     jocCartesCopia = barrejar(jocCartes);
- 
-    var width = constant*nColumnes + separacioH;
-    var height = constant*nFiles + separacioV;
+
+    var width = constant * nColumnes + separacioH;
+    var height = constant * nFiles + separacioV;
     for (let f = 1; f <= nFiles; f++) {
-    for (let c = 1; c <= nColumnes; c++) {
-        var id = "f"+f+"c"+c;
-        tauler.append('<div class="carta" id="'+id+'"><div class="cara darrera"></div><div class="cara davant"></div></div>');
-      }
+        for (let c = 1; c <= nColumnes; c++) {
+            var id = "f" + f + "c" + c;
+            tauler.append('<div class="carta" id="' + id + '"><div class="cara darrera"></div><div class="cara davant"></div></div>');
+        }
     }
 
     var index = 0;
 
-    ampladaCarta=$(".carta").width(); 
-    alcadaCarta=$(".carta").height();
+    ampladaCarta = $(".carta").width();
+    alcadaCarta = $(".carta").height();
     // mida del tauler
     $("#tauler").css({
-        "width" : width,
+        "width": width,
         "height": height
     });
 
-    
-   for (let f = 1; f <= nFiles; f++) {
-    for (let c = 1; c <= nColumnes; c++) {
-        carta = $("#f" + f + "c" + c);
-        carta.find(".davant").addClass(jocCartesCopia[index]);
-            carta.css({
-                "left": ((c-1) * (ampladaCarta + separacioH) + separacioH) + "px",
-                "top":  ((f-1) * (alcadaCarta  + separacioV) + separacioV) + "px"
-            });
-        index++;
 
-      }
+    for (let f = 1; f <= nFiles; f++) {
+        for (let c = 1; c <= nColumnes; c++) {
+            carta = $("#f" + f + "c" + c);
+            carta.find(".davant").addClass(jocCartesCopia[index]);
+            carta.css({
+                "left": ((c - 1) * (ampladaCarta + separacioH) + separacioH) + "px",
+                "top": ((f - 1) * (alcadaCarta + separacioV) + separacioV) + "px"
+            });
+            index++;
+
+        }
     }
 
-    $(".carta").on("click",function(){
-        //girar maxim 2 cartes al mateix temps
-        if (cartesGirades.length == 2){
+    $(".carta").on("click", function () {
+        clicks++;
+        if ($(this).hasClass("carta-girada")) {
             return;
-        };
-        //no girar la mateixa carta
-        if ($(this).hasClass("carta-girada")){
-        return;
         };
         $(this).toggleClass("carta-girada");
         cartesGirades.push($(this));
 
-        if (cartesGirades.length == 2){
-             comprobarCartes();
+        if (cartesGirades.length == 2) {
+            comprobarCartes();
+            return;
         }
-        
+
     });
 
 };
 
-function comprobarCartes(){
+function comprobarCartes() {
     var carta1 = cartesGirades[0];
     var carta2 = cartesGirades[1];
-     carta1.fadeOut(500, function(){ $(this).remove(); });
-        carta2.fadeOut(500, function(){ $(this).remove(); });
-        cartesGirades = [];
+    //agafar les classes
+    var clases1 = carta1.find(".davant").attr("class");
+    var clases2 = carta2.find(".davant").attr("class");
+    //agafa la clase que comença per carta aixi sabem el numero de la carta
+    var carta1num = clases1.match(/carta\d+/)[0];
+    var carta2num = clases2.match(/carta\d+/)[0];
+
+    console.log(clases1);
+    console.log(clases2);
+
+    clicsTotals = numCartes * 3;
+    console.log(clicks, clicsTotals, numCartes);
+    if (carta1num == carta2num && carta1.attr("id") != carta2.attr("id")) {
+        carta1.fadeOut(500, function () { $(this).remove(); });
+        carta2.fadeOut(500, function () {
+            $(this).remove();
+            if ($(".carta").length == 0) {
+                guanyar();
+            }
+        });
+    } else if (clicks > clicsTotals) {
+        perdre();
+    } else {
+        setTimeout(function () {
+            carta1.removeClass("carta-girada");
+            carta2.removeClass("carta-girada");
+        }, 1000);
+    }
+    cartesGirades = [];
 }
+function guanyar() {
+    $("#tauler").remove();
+
+    $("body").append('<div><h1>Has guanyat!</h1><button class="btn btn-primary" id="reiniciar">Reiniciar</button></div>');
+    $("#reiniciar").on("click", function () {
+        location.reload();
+    });
+};
+function perdre() {
+
+    $("#tauler").remove();
+
+    $("body").append('<div><h1>Has perdut!</h1><br><h4>Has superat el nombre màxim de clics</h4><button class="btn btn-primary" id="reiniciar">Reiniciar</button></div>');
+
+    $("#reiniciar").on("click", function () {
+        location.reload();
+    });
+};
 
 
 function barrejar(cartes) {
-    let numCartes = nColumnes * nFiles; //numero total de cartes
+    numCartes = nColumnes * nFiles; //numero total de cartes
 
     //barrejar
     for (var i = cartes.length - 1; i > 0; i--) {
@@ -154,7 +196,7 @@ function barrejar(cartes) {
 }
 
 
-function Reproduir(){
+function Reproduir() {
     musicaFons.loop = true; // Que la música es repeteixi
     musicaFons.play();
     var musicaIniciada = true;
