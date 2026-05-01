@@ -5,6 +5,9 @@ var constant = 132;
 var numCartes = 0;
 var clicks = 0;
 var musicaFons = new Audio('so/musicaFons.mp3');
+var soCorrecte = new Audio('so/correct.mp3');
+var soIncorrecte = new Audio('so/incorrect.mp3');
+var soVictoria = new Audio('so/victoria.mp3');
 
 //array buit per posar les cartes girades (max 2)
 var cartesGirades = [];
@@ -21,26 +24,38 @@ var jocCartesCopia = [];
 ;
 
 function valorTauler() {
+    pararMusicaFons();
     const valorFila = document.getElementById("fila").value;
 
-    if (valorFila < 0) {
+    if (valorFila <= 0) {
         alert("Els valors no poden ser negatius")
+        return;
     }
     const valorColumna = document.getElementById("columna").value;
 
 
-    if (valorColumna < 0) {
+    if (valorColumna <= 0) {
         alert("Els valors no poden ser negatius")
+        return;
     }
 
     var valorTotal = valorColumna * valorFila;
 
     if (valorTotal % 2 !== 0) {
-        alert("La multiplicació dels 2 valors ha de donar parell!");
+        if(valorTotal == 2){
+            alert("Valors massa petits");
+            return;
+        }
+        else{
+            alert("La multiplicació dels 2 valors ha de donar parell!"); 
+            return;
+        }
+
     }
 
     else if (valorTotal > 46) {
         alert("Els valors han de ser menors")
+        return;
     }
 
     else {
@@ -104,6 +119,11 @@ function crearTauler() {
         if ($(this).hasClass("carta-girada")) {
             return;
         };
+
+        var clicsTotals = numCartes * 3;
+        $("#clicsRestants").text(Math.max(0, clicsTotals - clicks));
+
+        
         $(this).toggleClass("carta-girada");
         cartesGirades.push($(this));
 
@@ -113,6 +133,11 @@ function crearTauler() {
         }
 
     });
+
+    // Inicialitza i mostra el comptador
+    var clicsTotals = numCartes * 3;
+    $("#clicsRestants").text(clicsTotals);
+    $("#infoClics").show();
 
 };
 
@@ -134,6 +159,7 @@ function comprobarCartes() {
     if (carta1num == carta2num && carta1.attr("id") != carta2.attr("id")) {
         carta1.fadeOut(500, function () { $(this).remove(); });
         carta2.fadeOut(500, function () {
+            Correcte();
             $(this).remove();
             if ($(".carta").length == 0) {
                 guanyar();
@@ -143,6 +169,8 @@ function comprobarCartes() {
         perdre();
     } else {
         setTimeout(function () {
+            console.log("Malament");
+            Incorrecte();
             carta1.removeClass("carta-girada");
             carta2.removeClass("carta-girada");
         }, 1000);
@@ -152,14 +180,21 @@ function comprobarCartes() {
 function guanyar() {
     $("#tauler").remove();
 
+    Victoria();
+    pararMusicaFons();
+
     $("body").append('<div><h1>Has guanyat!</h1><button class="btn btn-primary" id="reiniciar">Reiniciar</button></div>');
     $("#reiniciar").on("click", function () {
         location.reload();
     });
+
+    
 };
 function perdre() {
 
     $("#tauler").remove();
+
+    pararMusicaFons();
 
     $("body").append('<div><h1>Has perdut!</h1><br><h4>Has superat el nombre màxim de clics</h4><button class="btn btn-primary" id="reiniciar">Reiniciar</button></div>');
 
@@ -167,6 +202,10 @@ function perdre() {
         location.reload();
     });
 };
+
+function clicks(){
+
+}
 
 
 function barrejar(cartes) {
@@ -200,6 +239,18 @@ function Reproduir() {
     musicaFons.loop = true; // Que la música es repeteixi
     musicaFons.play();
     var musicaIniciada = true;
+}
+
+function Correcte(){
+    soCorrecte.play();    
+}
+
+function Incorrecte(){
+    soIncorrecte.play();    
+}
+
+function Victoria(){
+    soVictoria.play();
 }
 
 
