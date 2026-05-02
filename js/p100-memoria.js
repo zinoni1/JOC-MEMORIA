@@ -44,12 +44,12 @@ function valorTauler() {
     var valorTotal = valorColumna * valorFila;
 
     if (valorTotal % 2 !== 0) {
-        if(valorTotal == 2){
+        if (valorTotal == 2) {
             alert("Valors massa petits");
             return;
         }
-        else{
-            alert("La multiplicació dels 2 valors ha de donar parell!"); 
+        else {
+            alert("La multiplicació dels 2 valors ha de donar parell!");
             return;
         }
 
@@ -126,7 +126,7 @@ function crearTauler() {
         var clicsTotals = numCartes * 3;
         $("#clicsRestants").text(Math.max(0, clicsTotals - clicks));
 
-        
+
         $(this).toggleClass("carta-girada");
         cartesGirades.push($(this));
 
@@ -196,7 +196,7 @@ function guanyar() {
         location.reload();
     });
 
-    
+
 };
 function perdre() {
     clearInterval(intervalTemps);
@@ -211,24 +211,17 @@ function perdre() {
     });
 };
 
-function clicks(){
-
-}
-
 
 function iniciarComptador() {
     if (intervalTemps) clearInterval(intervalTemps);
+    // El temps és 8 segons per cada carta
     var temps = numCartes * 8;
     $("#tempsRestants").text(temps);
-    $("#tempsRestants").css("color", "");
     $("#infoTemps").show();
 
     intervalTemps = setInterval(function () {
         temps--;
         $("#tempsRestants").text(temps);
-        if (temps <= 10) {
-            $("#tempsRestants").css("color", "red");
-        }
         if (temps <= 0) {
             clearInterval(intervalTemps);
             perdre();
@@ -280,15 +273,15 @@ function canviarVolum(valor) {
     }
 }
 
-function Correcte(){
-    soCorrecte.play();    
+function Correcte() {
+    soCorrecte.play();
 }
 
-function Incorrecte(){
-    soIncorrecte.play();    
+function Incorrecte() {
+    soIncorrecte.play();
 }
 
-function Victoria(){
+function Victoria() {
     soVictoria.play();
 }
 
