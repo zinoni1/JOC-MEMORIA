@@ -24,14 +24,16 @@
 
 
 
-<p id="infoClics" class="text-center" style="display:none;">  Clics restants: <span id="clicsRestants"></span>
-<div id="tauler"></div>
-
-<div class="container text-center mt-3">
-    <div class="audio-controls p-3 border rounded bg-light d-inline-block">
-        <button id="btnMusica" class="btn btn-secondary" onclick="pararMusicaFons()">Pausar Música</button>
+<div id="controls-top">
+    <span id="infoTemps" style="display:none;">Temps: <span id="tempsRestants"></span>s</span>
+    <span id="infoClics" style="display:none;">Clics: <span id="clicsRestants"></span></span>
+    <div class="d-flex align-items-center gap-2">
+        <span id="iconVolum">🔊</span>
+        <input type="range" class="form-range" id="sliderVolum" min="0" max="100" value="100" oninput="canviarVolum(this.value)" style="width:90px;">
     </div>
 </div>
+
+<div id="tauler"></div>
 
 
 <footer>

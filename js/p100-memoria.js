@@ -4,6 +4,8 @@ var nFiles = 0, nColumnes = 0;
 var constant = 132;
 var numCartes = 0;
 var clicks = 0;
+var animacioEnCurs = false;
+var intervalTemps = null;
 var musicaFons = new Audio('so/musicaFons.mp3');
 var soCorrecte = new Audio('so/correct.mp3');
 var soIncorrecte = new Audio('so/incorrect.mp3');
@@ -115,6 +117,7 @@ function crearTauler() {
     }
 
     $(".carta").on("click", function () {
+        if (animacioEnCurs) return;
         clicks++;
         if ($(this).hasClass("carta-girada")) {
             return;
@@ -134,20 +137,22 @@ function crearTauler() {
 
     });
 
-    // Inicialitza i mostra el comptador
+    // Inicialitza i mostra el comptador de clics
     var clicsTotals = numCartes * 3;
     $("#clicsRestants").text(clicsTotals);
     $("#infoClics").show();
 
+    // Inicia el comptador de temps
+    iniciarComptador();
+
 };
 
 function comprobarCartes() {
+    animacioEnCurs = true;
     var carta1 = cartesGirades[0];
     var carta2 = cartesGirades[1];
-    //agafar les classes
     var clases1 = carta1.find(".davant").attr("class");
     var clases2 = carta2.find(".davant").attr("class");
-    //agafa la clase que comença per carta aixi sabem el numero de la carta
     var carta1num = clases1.match(/carta\d+/)[0];
     var carta2num = clases2.match(/carta\d+/)[0];
 
@@ -161,6 +166,7 @@ function comprobarCartes() {
         carta2.fadeOut(500, function () {
             Correcte();
             $(this).remove();
+            animacioEnCurs = false;
             if ($(".carta").length == 0) {
                 guanyar();
             }
@@ -173,11 +179,13 @@ function comprobarCartes() {
             Incorrecte();
             carta1.removeClass("carta-girada");
             carta2.removeClass("carta-girada");
+            animacioEnCurs = false;
         }, 1000);
     }
     cartesGirades = [];
 }
 function guanyar() {
+    clearInterval(intervalTemps);
     $("#tauler").remove();
 
     Victoria();
@@ -191,7 +199,7 @@ function guanyar() {
     
 };
 function perdre() {
-
+    clearInterval(intervalTemps);
     $("#tauler").remove();
 
     pararMusicaFons();
@@ -207,6 +215,26 @@ function clicks(){
 
 }
 
+
+function iniciarComptador() {
+    if (intervalTemps) clearInterval(intervalTemps);
+    var temps = numCartes * 8;
+    $("#tempsRestants").text(temps);
+    $("#tempsRestants").css("color", "");
+    $("#infoTemps").show();
+
+    intervalTemps = setInterval(function () {
+        temps--;
+        $("#tempsRestants").text(temps);
+        if (temps <= 10) {
+            $("#tempsRestants").css("color", "red");
+        }
+        if (temps <= 0) {
+            clearInterval(intervalTemps);
+            perdre();
+        }
+    }, 1000);
+}
 
 function barrejar(cartes) {
     numCartes = nColumnes * nFiles; //numero total de cartes
@@ -236,9 +264,20 @@ function barrejar(cartes) {
 
 
 function Reproduir() {
-    musicaFons.loop = true; // Que la música es repeteixi
+    musicaFons.loop = true;
+    musicaFons.volume = $("#sliderVolum").val() / 100;
     musicaFons.play();
-    var musicaIniciada = true;
+}
+
+function canviarVolum(valor) {
+    musicaFons.volume = valor / 100;
+    if (valor == 0) {
+        $("#iconVolum").text("🔇");
+    } else if (valor < 50) {
+        $("#iconVolum").text("🔉");
+    } else {
+        $("#iconVolum").text("🔊");
+    }
 }
 
 function Correcte(){
