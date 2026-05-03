@@ -1,34 +1,63 @@
 <html lang="cat">
 <head>
     <meta charset="utf-8">
-    <title>Donar la volta a una carta</title>
+    <title>Memoria Cartes</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
     <script src="js/jquery-4.0.0.js"></script>
     <script src="js/p100-memoria.js"></script>
 </head>
 <body>
+
 <header>
-    <h1>Memoria cartes - DEMO</h1>
+    <h1>Memoria cartes</h1>
 </header>
 
-<!--Botó del bootstrap-->
-<div class="container mt-3">
-  <div class="input-group mb-3 mx-auto" style="width: 410px;">
-    <input type="text" id="fila" class="form-control" placeholder="Número Files">
-    <span class="input-group-text"></span>
-    <input type="text" id="columna" class="form-control" placeholder="Número Columnes">
-    <button onclick="valorTauler()" class="btn btn-primary" type="button" id="button-aplica">Aplica</button>
-  </div>
+<div id="seleccio">
+    <div class="seleccio-wrapper">
+        <p class="seleccio-subtitol">Tria el teu joc</p>
+        <h2 class="seleccio-titol">Quin tipus de cartes vols?</h2>
+        <div class="seleccio-botons">
+            <button class="btn-tria" onclick="seleccionarTipus('pokemon')">
+                <span class="btn-tria-icona">🎮</span>
+                <span class="btn-tria-text">Pokémon</span>
+            </button>
+            <div class="seleccio-separador">o</div>
+            <button class="btn-tria" onclick="seleccionarTipus('poker')">
+                <span class="btn-tria-icona">♠</span>
+                <span class="btn-tria-text">Poker</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div id="configuracio" style="display:none;">
+    <div id="controls-joc">
+        <div class="container mt-3">
+            <div class="input-group mb-3 mx-auto" style="width: 410px;">
+                <input type="text" id="fila"    class="form-control" placeholder="Número Files">
+                <span class="input-group-text"></span>
+                <input type="text" id="columna" class="form-control" placeholder="Número Columnes">
+                <button onclick="valorTauler()" class="btn btn-primary" type="button" id="button-aplica">Aplica</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="controls-top">
+    <span id="infoTemps" style="display:none;">Temps restant: <span id="tempsRestants"></span>s</span>
+    <span id="infoClics" style="display:none;">Clics restants: <span id="clicsRestants"></span></span>
+    <div class="d-flex align-items-center gap-2">
+        <span id="iconVolum">🔊</span>
+        <input type="range" class="form-range" id="sliderVolum" min="0" max="100" value="100" oninput="canviarVolum(this.value)" style="width:90px;">
+    </div>
 </div>
 
 <div id="tauler"></div>
 
-<footer>
+<footer id="footer-joc" style="display:none;">
     <p>Fes clic en una carta per donar-li la volta</p>
 </footer>
-
-
 
 </body>
 </html>
