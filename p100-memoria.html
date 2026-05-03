@@ -34,6 +34,14 @@
 <div id="configuracio" style="display:none;">
     <div id="controls-joc">
         <div class="container mt-3">
+            <div class="d-flex justify-content-center align-items-center gap-2 mb-2">
+                <span class="text-muted" style="font-size:.85rem;">Dificultat:</span>
+                <div class="btn-dificultat-grup">
+                    <button class="btn-dificultat" data-dif="facil" onclick="seleccionarDificultat('facil')">Fàcil</button>
+                    <button class="btn-dificultat activa" data-dif="normal" onclick="seleccionarDificultat('normal')">Normal</button>
+                    <button class="btn-dificultat" data-dif="dificil" onclick="seleccionarDificultat('dificil')">Difícil</button>
+                </div>
+            </div>
             <div class="input-group mb-3 mx-auto" style="width: 410px;">
                 <input type="text" id="fila"    class="form-control" placeholder="Número Files">
                 <span class="input-group-text"></span>
