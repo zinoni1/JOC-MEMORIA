@@ -83,6 +83,113 @@ body {
     font-weight: 400;
 }
 
+/* ── Configuració ────────────────────────────────────────────────── */
+.config-bloc {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    padding: 22px 0 10px;
+}
+
+.config-grup {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.config-label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #888;
+    width: 72px;
+    text-align: right;
+    flex-shrink: 0;
+}
+
+/* Dificultat */
+.btn-dificultat-grup {
+    display: flex;
+    gap: 0;
+    border: 1.5px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.btn-dificultat {
+    background: #fff;
+    border: none;
+    border-right: 1.5px solid #ccc;
+    padding: 7px 18px;
+    font-size: 0.88rem;
+    cursor: pointer;
+    color: #555;
+    transition: background 0.15s, color 0.15s;
+    font-family: inherit;
+}
+
+.btn-dificultat:last-child {
+    border-right: none;
+}
+
+.btn-dificultat:hover {
+    background: #f5f5f5;
+}
+
+.btn-dificultat.activa {
+    background: #2d2d2d;
+    color: #fff;
+    font-weight: 600;
+}
+
+/* Inputs files/columnes */
+.config-inputs {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.config-input {
+    width: 80px;
+    padding: 7px 10px;
+    border: 1.5px solid #ccc;
+    border-radius: 7px;
+    font-size: 0.9rem;
+    text-align: center;
+    outline: none;
+    transition: border-color 0.15s;
+    font-family: inherit;
+}
+
+.config-input:focus {
+    border-color: #888;
+}
+
+.config-x {
+    color: #aaa;
+    font-size: 1rem;
+}
+
+.btn-aplica {
+    background: #2d2d2d;
+    color: #fff;
+    border: none;
+    padding: 7px 20px;
+    border-radius: 7px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+    letter-spacing: 0.03em;
+    font-family: inherit;
+}
+
+.btn-aplica:hover {
+    background: #444;
+    transform: translateY(-1px);
+}
+
 /* ── Controls fixos ──────────────────────────────────────────────── */
 #controls-top {
     position: fixed;
@@ -145,7 +252,7 @@ body {
     transform: rotate3d(0,1,0,0deg);
 }
 
-/* ── Posicions Pokémon (només mode pokemon) ──────────────────────── */
+/* ── Posicions Pokémon ───────────────────────────────────────────── */
 body:not(.poker) .davant.carta1  { background-position:    0       0; }
 body:not(.poker) .davant.carta2  { background-position: -111px     0; }
 body:not(.poker) .davant.carta3  { background-position: -222px     0; }
@@ -153,7 +260,6 @@ body:not(.poker) .davant.carta4  { background-position: -333px     0; }
 body:not(.poker) .davant.carta5  { background-position: -444px     0; }
 body:not(.poker) .davant.carta6  { background-position: -555px     0; }
 body:not(.poker) .davant.carta7  { background-position: -666px     0; }
-
 body:not(.poker) .davant.carta8  { background-position:    0    -111px; }
 body:not(.poker) .davant.carta9  { background-position: -111px  -111px; }
 body:not(.poker) .davant.carta10 { background-position: -222px  -111px; }
@@ -161,7 +267,6 @@ body:not(.poker) .davant.carta11 { background-position: -333px  -111px; }
 body:not(.poker) .davant.carta12 { background-position: -444px  -111px; }
 body:not(.poker) .davant.carta13 { background-position: -555px  -111px; }
 body:not(.poker) .davant.carta14 { background-position: -666px  -111px; }
-
 body:not(.poker) .davant.carta15 { background-position:    0    -222px; }
 body:not(.poker) .davant.carta16 { background-position: -111px  -222px; }
 body:not(.poker) .davant.carta17 { background-position: -222px  -222px; }
@@ -173,10 +278,7 @@ body:not(.poker) .davant.carta21 { background-position: -666px  -222px; }
 /* ═══════════════════════════════════════════════════════════════════
    MODE POKER
 ═══════════════════════════════════════════════════════════════════ */
-body.poker .carta {
-    width: 79px;
-    height: 123px;
-}
+body.poker .carta { width: 79px; height: 123px; }
 
 body.poker .darrera {
     background-image: url(../images/poker1.png);
@@ -194,14 +296,9 @@ body.poker .davant {
     transform: rotate3d(0,1,0,-180deg);
 }
 
-body.poker .carta-girada .darrera {
-    transform: rotate3d(0,1,0,180deg);
-}
-body.poker .carta-girada .davant {
-    transform: rotate3d(0,1,0,0deg);
-}
+body.poker .carta-girada .darrera { transform: rotate3d(0,1,0,180deg); }
+body.poker .carta-girada .davant  { transform: rotate3d(0,1,0,0deg); }
 
-/* Fila 1 — Trèbols (A → K) */
 body.poker .davant.carta1  { background-position:    0      0; }
 body.poker .davant.carta2  { background-position:  -79px    0; }
 body.poker .davant.carta3  { background-position: -158px    0; }
@@ -215,8 +312,6 @@ body.poker .davant.carta10 { background-position: -711px    0; }
 body.poker .davant.carta11 { background-position: -790px    0; }
 body.poker .davant.carta12 { background-position: -869px    0; }
 body.poker .davant.carta13 { background-position: -948px    0; }
-
-/* Fila 2 — Diamants (A → K) */
 body.poker .davant.carta14 { background-position:    0    -123px; }
 body.poker .davant.carta15 { background-position:  -79px  -123px; }
 body.poker .davant.carta16 { background-position: -158px  -123px; }
@@ -230,8 +325,6 @@ body.poker .davant.carta23 { background-position: -711px  -123px; }
 body.poker .davant.carta24 { background-position: -790px  -123px; }
 body.poker .davant.carta25 { background-position: -869px  -123px; }
 body.poker .davant.carta26 { background-position: -948px  -123px; }
-
-/* Fila 3 — Cors (A → K) */
 body.poker .davant.carta27 { background-position:    0    -246px; }
 body.poker .davant.carta28 { background-position:  -79px  -246px; }
 body.poker .davant.carta29 { background-position: -158px  -246px; }
@@ -245,8 +338,6 @@ body.poker .davant.carta36 { background-position: -711px  -246px; }
 body.poker .davant.carta37 { background-position: -790px  -246px; }
 body.poker .davant.carta38 { background-position: -869px  -246px; }
 body.poker .davant.carta39 { background-position: -948px  -246px; }
-
-/* Fila 4 — Piques (A → K) */
 body.poker .davant.carta40 { background-position:    0    -369px; }
 body.poker .davant.carta41 { background-position:  -79px  -369px; }
 body.poker .davant.carta42 { background-position: -158px  -369px; }
@@ -261,8 +352,9 @@ body.poker .davant.carta50 { background-position: -790px  -369px; }
 body.poker .davant.carta51 { background-position: -869px  -369px; }
 body.poker .davant.carta52 { background-position: -948px  -369px; }
 
-
-/* ── Missatge final (guanyar / perdre) ── */
+/* ═══════════════════════════════════════════════════════════════════
+   PANTALLA FINAL — disseny nou
+═══════════════════════════════════════════════════════════════════ */
 .missatge-final {
     position: fixed;
     top: 50%;
@@ -270,60 +362,139 @@ body.poker .davant.carta52 { background-position: -948px  -369px; }
     transform: translate(-50%, -50%);
     z-index: 9999;
 
-    background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
-    border: 3px solid #888;
-    border-radius: 20px;
-    box-shadow: 0 0 0 9999px rgba(0,0,0,0.6),
-                0 0 40px rgba(0,0,0,0.8),
-                inset 0 1px 0 rgba(255,255,255,0.1);
+    background: #fafaf8;
+    border: 1.5px solid #d8d8d0;
+    border-radius: 4px;
+    box-shadow: 0 0 0 9999px rgba(0,0,0,0.45),
+                0 8px 40px rgba(0,0,0,0.18);
 
-    padding: 50px 60px;
-    text-align: center;
-    min-width: 340px;
+    padding: 40px 48px 36px;
+    text-align: left;
+    min-width: 360px;
+    max-width: 480px;
+    width: 90vw;
 }
 
-.missatge-final h1 {
-    font-size: 2.4rem;
+/* Bloc resultat */
+.mf-resultat h1 {
+    font-size: 1.9rem;
     font-weight: 700;
-    color: #f0f0f0;
-    margin-bottom: 10px;
-    text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    color: #111;
+    margin: 0 0 6px;
+    letter-spacing: -0.5px;
 }
 
-.missatge-final h4 {
-    color: #aaa;
-    font-size: 1rem;
-    font-weight: 400;
-    margin-bottom: 0;
+.mf-resultat.guanya h1::before {
+    content: '✓ ';
+    color: #3d7a52;
 }
 
-.missatge-final .btn-primary {
-    margin-top: 30px;
-    padding: 10px 35px;
-    font-size: 1rem;
+.mf-resultat.perd h1::before {
+    content: '✗ ';
+    color: #b04040;
+}
+
+.mf-temps {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 0 0 4px;
+}
+
+.mf-record {
+    font-size: 0.88rem;
     font-weight: 600;
-    border-radius: 10px;
-    background: #4a7c59;
-    border-color: #3a6348;
-    letter-spacing: 0.5px;
-    transition: all 0.2s;
+    color: #3d7a52;
+    margin: 0;
+    letter-spacing: 0.01em;
 }
 
-.missatge-final .btn-primary:hover {
-    background: #3a6348;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+.mf-motiu {
+    font-size: 0.9rem;
+    color: #888;
+    margin: 4px 0 0;
 }
 
-/* Línia decorativa sota el títol */
-.missatge-final h1::after {
-    content: '';
-    display: block;
-    width: 60px;
-    height: 3px;
-    background: #4a7c59;
-    margin: 12px auto 0;
-    border-radius: 2px;
+/* Ranking */
+.mf-ranking {
+    margin-top: 26px;
+    border-top: 1px solid #e5e5e0;
+    padding-top: 20px;
+}
+
+.mf-ranking h3 {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: #999;
+    margin: 0 0 12px;
+    font-weight: 500;
+}
+
+.ranking-taula {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.87rem;
+}
+
+.ranking-taula th {
+    color: #aaa;
+    font-weight: 500;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0 8px 8px 0;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+}
+
+.ranking-taula td {
+    padding: 7px 8px 7px 0;
+    color: #444;
+    border-bottom: 1px solid #f0f0ec;
+}
+
+.ranking-taula tr:last-child td {
+    border-bottom: none;
+}
+
+/* Fila nova (resultat actual) */
+.ranking-fila-nova td {
+    color: #111;
+    font-weight: 600;
+    background: #f0f5f1;
+}
+
+.ranking-fila-nova td:first-child {
+    border-radius: 3px 0 0 3px;
+}
+
+.ranking-fila-nova td:last-child {
+    border-radius: 0 3px 3px 0;
+}
+
+/* Botons finals */
+.mf-botons {
+    margin-top: 24px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn-mf {
+    background: #111;
+    color: #fff;
+    border: none;
+    padding: 9px 22px;
+    border-radius: 5px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.03em;
+    transition: background 0.15s;
+    font-family: inherit;
+}
+
+.btn-mf:hover {
+    background: #333;
 }
 
 /* ── Footer ──────────────────────────────────────────────────────── */
@@ -331,4 +502,37 @@ footer {
     margin-top: 10px;
     color: #555;
     font-size: 0.9rem;
+}
+
+/* ── Dificultat ──────────────────────────────────────────────────── */
+.btn-dificultat-grup {
+    display: flex;
+    border: 1.5px solid #ccc;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.btn-dificultat {
+    background: #fff;
+    border: none;
+    border-right: 1.5px solid #ccc;
+    padding: 5px 14px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    color: #555;
+    transition: background 0.15s, color 0.15s;
+    font-family: inherit;
+}
+
+.btn-dificultat:last-child { border-right: none; }
+.btn-dificultat:hover { background: #f5f5f5; }
+.btn-dificultat.activa { background: #2d2d2d; color: #fff; font-weight: 600; }
+
+/* ── Botó Aplica mateix color que dificultat activa ─────────────── */
+#button-aplica.btn-primary,
+#button-aplica.btn-primary:hover,
+#button-aplica.btn-primary:focus,
+#button-aplica.btn-primary:active {
+    background-color: #2d2d2d;
+    border-color: #2d2d2d;
 }

@@ -1,5 +1,12 @@
 // ── Variables tipus ──────────────────────────────────────────────────
 var tipusCarta = null;
+var dificultat = 'normal';
+
+var CONFIG_DIFICULTAT = {
+    facil:   { temps: 14, clics: 5 },
+    normal:  { temps: 8,  clics: 3 },
+    dificil: { temps: 5,  clics: 2 }
+};
 
 var jocCartesPokemon = [
     'carta1','carta2','carta3','carta4','carta5','carta6','carta7',
@@ -51,6 +58,13 @@ function seleccionarTipus(tipus) {
     }
 }
 
+// ── Selecció de dificultat ───────────────────────────────────────────
+function seleccionarDificultat(nova) {
+    dificultat = nova;
+    $('.btn-dificultat').removeClass('activa');
+    $('.btn-dificultat[data-dif="' + nova + '"]').addClass('activa');
+}
+
 // ── valorTauler ──────────────────────────────────────────────────────
 function valorTauler() {
     pararMusicaFons();
@@ -86,7 +100,7 @@ function crearTauler() {
     cartesGirades  = [];
     animacioEnCurs = false;
     if (intervalTemps) clearInterval(intervalTemps);
-    $("#controls-joc").hide();   // ← afegeix aquesta línia
+    $("#controls-joc").hide();
 
 
     if (tipusCarta === 'poker') {
@@ -139,7 +153,7 @@ function crearTauler() {
         if ($(this).hasClass("carta-girada")) return;
 
         clicks++;
-        var clicsTotals = numCartes * 3;
+        var clicsTotals = numCartes * CONFIG_DIFICULTAT[dificultat].clics;
         $("#clicsRestants").text(Math.max(0, clicsTotals - clicks));
 
         $(this).toggleClass("carta-girada");
@@ -147,7 +161,7 @@ function crearTauler() {
         if (cartesGirades.length === 2) comprobarCartes();
     });
 
-    var clicsTotals = numCartes * 3;
+    var clicsTotals = numCartes * CONFIG_DIFICULTAT[dificultat].clics;
     $("#clicsRestants").text(clicsTotals);
     $("#infoClics").show();
     $("#footer-joc").show();
@@ -164,7 +178,7 @@ function comprobarCartes() {
     var carta1num = clases1.match(/carta\d+/)[0];
     var carta2num = clases2.match(/carta\d+/)[0];
 
-    var clicsTotals = numCartes * 3;
+    var clicsTotals = numCartes * CONFIG_DIFICULTAT[dificultat].clics;
 
     if (carta1num === carta2num && carta1.attr("id") !== carta2.attr("id")) {
         carta1.fadeOut(500, function () { $(this).remove(); });
@@ -217,7 +231,7 @@ function perdre() {
 // ── iniciarComptador ─────────────────────────────────────────────────
 function iniciarComptador() {
     if (intervalTemps) clearInterval(intervalTemps);
-    temps = numCartes * 8;
+    temps = numCartes * CONFIG_DIFICULTAT[dificultat].temps;
     $("#tempsRestants").text(temps);
     $("#infoTemps").show();
 
